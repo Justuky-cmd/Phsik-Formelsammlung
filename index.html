@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Physik — Formelsammlung</title>
+<style>
+:root{
+ --bg:#0b0d12;--surface:#12161e;--surface2:#171d27;--line:#252d3a;
+ --text:#e9edf4;--muted:#97a2b3;--accent:#83aaff;--accent2:#b4c8ff;
+ --good:#8bd5a6;--radius:16px;--shadow:0 12px 40px rgba(0,0,0,.2)
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 70% -15%,#18243b 0,transparent 45%),var(--bg);color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{color:var(--accent)}
+.shell{max-width:1240px;margin:auto;padding:28px 24px 70px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.2px}
+.logo{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#83aaff,#526ed6);color:#09101e;font-weight:900;font-size:20px}
+.top-actions{display:flex;gap:8px}
+.btn{border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:9px 13px;border-radius:11px;transition:.15s}
+.btn:hover{border-color:#526b9d;transform:translateY(-1px)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#0a1020;font-weight:650}
+.btn.small{padding:6px 9px;font-size:13px}
+.hero{margin:10px 0 25px}
+.eyebrow{color:var(--accent);font-weight:650;font-size:12px;letter-spacing:1.6px;text-transform:uppercase}
+h1{font-size:clamp(30px,5vw,47px);letter-spacing:-1.6px;line-height:1.1;margin:10px 0}
+.hero p{color:var(--muted);max-width:650px;margin:12px 0 0}
+.stats{display:flex;gap:12px;margin:24px 0;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:12px 16px;min-width:120px}
+.stat b{font-size:20px;display:block}.stat span{color:var(--muted);font-size:12px}
+.searchbar{display:flex;gap:10px;margin:22px 0 18px}
+.search{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:13px 15px;color:var(--text);outline:none}
+.search:focus{border-color:var(--accent)}
+.layout{display:grid;grid-template-columns:235px minmax(0,1fr);gap:22px}
+.sidebar{position:sticky;top:15px;align-self:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px}
+.side-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;padding:9px 10px}
+.navitem{width:100%;text-align:left;background:transparent;border:0;color:var(--muted);padding:9px 10px;border-radius:9px;display:flex;justify-content:space-between;gap:8px}
+.navitem:hover,.navitem.active{background:var(--surface2);color:var(--text)}
+.count{font-size:12px;color:var(--muted)}
+.content-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 15px}
+.content-head h2{font-size:21px;margin:0;letter-spacing:-.4px}
+.content-head p{margin:3px 0;color:var(--muted);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.card{background:linear-gradient(150deg,var(--surface),#11151b);border:1px solid var(--line);border-radius:var(--radius);padding:17px;min-width:0}
+.card:hover{border-color:#35445d}
+.cardtop{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.tag{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.card h3{margin:4px 0 0;font-size:16px}
+.favorite{background:none;border:0;color:#6f7d90;font-size:20px;padding:0 2px}
+.favorite.on{color:#ffd27b}
+.formula{font-family:"Cambria Math",Cambria,Georgia,serif;font-size:23px;letter-spacing:.2px;padding:15px 8px 10px;overflow-x:auto;white-space:nowrap;color:var(--accent2)}
+.desc{color:var(--muted);font-size:13px;margin:0 0 12px}
+.vars{border-top:1px solid var(--line);padding-top:10px;display:grid;gap:5px}
+.var{font-size:12.5px;display:grid;grid-template-columns:36px 1fr auto;gap:7px;align-items:start}
+.symbol{font-family:Cambria,serif;color:var(--accent2);font-weight:700}
+.unit{color:var(--muted);white-space:nowrap}
+.extra{color:var(--muted);font-size:12px;margin-top:10px}
+.cardfoot{display:flex;justify-content:space-between;align-items:center;margin-top:13px;gap:8px}
+.pill{font-size:11px;color:var(--good);background:#173025;padding:4px 8px;border-radius:99px}
+.empty{border:1px dashed var(--line);border-radius:var(--radius);padding:35px;text-align:center;color:var(--muted);grid-column:1/-1}
+.modal-back{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+.modal-back.show{display:flex}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:18px;width:min(560px,100%);max-height:90vh;overflow:auto;padding:22px;box-shadow:var(--shadow)}
+.modal h2{margin:0 0 15px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:12px;color:var(--muted)}
+.field input,.field select,.field textarea{background:var(--surface2);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px;outline:none}
+.field textarea{min-height:75px;resize:vertical}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 16px;color:var(--text);display:none;z-index:20}
+.toast.show{display:block}
+footer{color:var(--muted);font-size:12px;margin-top:28px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.sidebar{position:static;display:flex;overflow:auto;gap:4px}.side-label{display:none}.navitem{width:auto;white-space:nowrap}.cards{grid-template-columns:1fr}}
+@media(max-width:520px){.shell{padding:18px 13px 45px}.top{margin-bottom:24px}.stats{gap:7px}.stat{min-width:0;flex:1;padding:10px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.top-actions .btn{padding:8px 9px}.hero p{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="top">
+ <div class="brand"><div class="logo">Φ</div><span>Physik <span style="color:var(--muted);font-weight:500">/ Formeln</span></span></div>
+ <div class="top-actions"><button class="btn" id="exportBtn">Export</button><button class="btn" id="importBtn">Import</button><button class="btn primary" id="addBtn">＋ Formel</button></div>
+</header>
+<section class="hero">
+ <div class="eyebrow">Dein persönliches Nachschlagewerk</div>
+ <h1>Physik, auf den Punkt.</h1>
+ <p>Formeln nach Themen sortiert, Größen verständlich erklärt und deine Sammlung individuell anpassbar. Suche, speichere Favoriten oder ergänze eigene Einträge.</p>
+ <div class="stats"><div class="stat"><b id="formulaCount">0</b><span>Formeln</span></div><div class="stat"><b id="topicCount">0</b><span>Themen</span></div><div class="stat"><b id="favCount">0</b><span>Favoriten</span></div></div>
+</section>
+<div class="searchbar"><input id="search" class="search" placeholder="Suchen: Formel, Größe, Einheit, Begriff …"><button class="btn" id="clearSearch">Zurücksetzen</button></div>
+<div class="layout">
+<aside class="sidebar" id="sidebar"></aside>
+<main>
+<div class="content-head"><div><h2 id="sectionTitle">Alle Formeln</h2><p id="sectionDesc">Nach Themen geordnet</p></div><select class="btn" id="sort"><option value="topic">Thema</option><option value="name">Name A–Z</option></select></div>
+<div class="cards" id="cards"></div>
+</main>
+</div>
+<footer>Hinweis: Formeln gelten unter den jeweils angegebenen Modellannahmen. Eigene Einträge und Favoriten werden in diesem Browser gespeichert. Für wichtige Prüfungsinhalte Werte und Vorzeichenkonventionen mit deinem Unterrichtsmaterial abgleichen.</footer>
+</div>
+<div class="modal-back" id="modalBack"><div class="modal"><h2 id="modalTitle">Formel ergänzen</h2><form id="formulaForm"><div class="formgrid">
+<div class="field"><label>Formelname</label><input required name="name" placeholder="z. B. Ohmsches Gesetz"></div>
+<div class="field"><label>Themenbereich</label><input required name="topic" placeholder="z. B. Elektrizitätslehre"></div>
+<div class="field full"><label>Formel (Text / Unicode)</label><input required name="formula" placeholder="U = R · I"></div>
+<div class="field full"><label>Erklärung / Bedingungen</label><textarea name="desc" placeholder="Wann gilt die Formel?"></textarea></div>
+<div class="field full"><label>Größen (je Zeile: Symbol | Definition | Einheit)</label><textarea name="vars" placeholder="U | elektrische Spannung | V&#10;R | elektrischer Widerstand | Ω&#10;I | elektrische Stromstärke | A"></textarea></div>
+<div class="field full"><label>Umstellung / Zusatz</label><input name="extra" placeholder="z. B. I = U/R"></div>
+</div><div class="modal-actions"><button type="button" class="btn" id="cancelBtn">Abbrechen</button><button class="btn primary" type="submit">Speichern</button></div></form></div></div>
+<input type="file" id="fileInput" accept="application/json" hidden>
+<div class="toast" id="toast"></div>
+<script>
+const base = [
+{topic:"Mechanik",name:"Gleichförmige Bewegung",formula:"s = v · t",desc:"Konstante Geschwindigkeit; die Bewegungsrichtung bleibt gleich.",vars:[["s","zurückgelegter Weg","m"],["v","Geschwindigkeit","m/s"],["t","Zeit","s"]],extra:"v = s/t · t = s/v"},
+{topic:"Mechanik",name:"Durchschnittsgeschwindigkeit",formula:"v̄ = Δs / Δt",desc:"Wegänderung pro Zeitintervall; nicht zwingend konstante Geschwindigkeit.",vars:[["Δs","Wegänderung","m"],["Δt","Zeitintervall","s"]],extra:""},
+{topic:"Mechanik",name:"Beschleunigung",formula:"a = Δv / Δt",desc:"Mittlere Beschleunigung im betrachteten Zeitintervall.",vars:[["a","Beschleunigung","m/s²"],["Δv","Geschwindigkeitsänderung","m/s"],["Δt","Zeitintervall","s"]],extra:"Bei konstanter Beschleunigung: v = v₀ + a·t"},
+{topic:"Mechanik",name:"Gleichmäßig beschleunigte Bewegung (Weg)",formula:"s = s₀ + v₀t + ½at²",desc:"Gilt bei konstanter Beschleunigung entlang einer Achse.",vars:[["s","Ort zum Zeitpunkt t","m"],["s₀","Anfangsort","m"],["v₀","Anfangsgeschwindigkeit","m/s"],["a","konstante Beschleunigung","m/s²"],["t","Zeit","s"]],extra:""},
+{topic:"Mechanik",name:"Geschwindigkeit ohne Zeit",formula:"v² = v₀² + 2a(s − s₀)",desc:"Konstante Beschleunigung; eliminiert die Zeit aus den Bewegungsgleichungen.",vars:[["v","Endgeschwindigkeit","m/s"],["v₀","Anfangsgeschwindigkeit","m/s"],["a","Beschleunigung","m/s²"],["s−s₀","Ortsänderung","m"]],extra:""},
+{topic:"Mechanik",name:"Newton: Kraft",formula:"F = m · a",desc:"Resultierende Kraft bewirkt die Beschleunigung eines Körpers (klassische Mechanik).",vars:[["F","resultierende Kraft","N"],["m","Masse","kg"],["a","Beschleunigung","m/s²"]],extra:"1 N = 1 kg·m/s²"},
+{topic:"Mechanik",name:"Gewichtskraft",formula:"Fᴳ = m · g",desc:"Nahe der Erdoberfläche mit g ≈ 9,81 m/s².",vars:[["Fᴳ","Gewichtskraft","N"],["m","Masse","kg"],["g","Fallbeschleunigung","m/s²"]],extra:""},
+{topic:"Mechanik",name:"Impuls",formula:"p = m · v",desc:"Impuls eines Körpers in der klassischen Mechanik.",vars:[["p","Impuls","kg·m/s"],["m","Masse","kg"],["v","Geschwindigkeit","m/s"]],extra:""},
+{topic:"Mechanik",name:"Impulserhaltung",formula:"Σp vorher = Σp nachher",desc:"In einem abgeschlossenen System bleibt der Gesamtimpuls erhalten, wenn keine äußere resultierende Kraft wirkt.",vars:[["p","Impuls","kg·m/s"]],extra:""},
+{topic:"Mechanik",name:"Arbeit (konstante Kraft)",formula:"W = F · s · cos(α)",desc:"Kraft verrichtet Arbeit entlang der Verschiebung. Bei paralleler Kraft: α = 0.",vars:[["W","Arbeit","J"],["F","Kraft","N"],["s","Weg","m"],["α","Winkel zwischen Kraft und Weg","°"]],extra:"Bei paralleler Kraft W = F·s"},
+{topic:"Mechanik",name:"Kinetische Energie",formula:"Eₖ = ½ m v²",desc:"Bewegungsenergie eines Körpers in der klassischen Mechanik.",vars:[["Eₖ","kinetische Energie","J"],["m","Masse","kg"],["v","Geschwindigkeit","m/s"]],extra:""},
+{topic:"Mechanik",name:"Potenzielle Energie (Schwerefeld)",formula:"Eₚ = m · g · h",desc:"Bezogen auf eine gewählte Höhe h nahe der Erdoberfläche, wo g näherungsweise konstant ist.",vars:[["Eₚ","potenzielle Energie","J"],["m","Masse","kg"],["g","Fallbeschleunigung","m/s²"],["h","Höhe über Bezugspunkt","m"]],extra:""},
+{topic:"Mechanik",name:"Leistung",formula:"P = W / Δt",desc:"Über ein Zeitintervall gemittelte umgesetzte Arbeit pro Zeit.",vars:[["P","Leistung","W"],["W","Arbeit","J"],["Δt","Zeitintervall","s"]],extra:"Bei konstanter Geschwindigkeit und paralleler Kraft: P = F·v"},
+{topic:"Mechanik",name:"Dichte",formula:"ρ = m / V",desc:"Masse pro Volumen eines Stoffes; bei homogenen Stoffen.",vars:[["ρ","Dichte","kg/m³"],["m","Masse","kg"],["V","Volumen","m³"]],extra:""},
+{topic:"Mechanik",name:"Druck",formula:"p = F⊥ / A",desc:"Kraftkomponente senkrecht zur Fläche pro Fläche.",vars:[["p","Druck","Pa"],["F⊥","senkrechte Kraftkomponente","N"],["A","Fläche","m²"]],extra:"1 Pa = 1 N/m²"},
+{topic:"Mechanik",name:"Hydrostatischer Druck",formula:"Δp = ρ · g · Δh",desc:"Druckdifferenz in einer ruhenden Flüssigkeit; Dichte und g näherungsweise konstant.",vars:[["Δp","Druckdifferenz","Pa"],["ρ","Flüssigkeitsdichte","kg/m³"],["g","Fallbeschleunigung","m/s²"],["Δh","Höhendifferenz","m"]],extra:""},
+{topic:"Mechanik",name:"Hookesches Gesetz",formula:"F = −D · x",desc:"Ideale Feder im linearen elastischen Bereich; das Minus kennzeichnet die rückstellende Richtung.",vars:[["F","Rückstellkraft","N"],["D","Federkonstante","N/m"],["x","Auslenkung von Ruhelage","m"]],extra:"Betrag: |F| = D·|x|"},
+{topic:"Mechanik",name:"Kreisbewegung: Zentripetalbeschleunigung",formula:"aᶻ = v² / r",desc:"Beschleunigung zum Kreismittelpunkt bei Kreisbewegung.",vars:[["aᶻ","Zentripetalbeschleunigung","m/s²"],["v","Bahngeschwindigkeit","m/s"],["r","Radius","m"]],extra:"Fᶻ = m·v²/r"},
+{topic:"Mechanik",name:"Gravitationsgesetz",formula:"F = G · m₁m₂ / r²",desc:"Betrag der Gravitationskraft zweier punktförmiger Massen bzw. kugelsymmetrischer Körper außerhalb ihrer Oberfläche.",vars:[["F","Gravitationskraft","N"],["G","Gravitationskonstante","N·m²/kg²"],["m₁, m₂","Massen","kg"],["r","Abstand der Massenschwerpunkte","m"]],extra:"G ≈ 6,674·10⁻¹¹ N·m²/kg²"},
+{topic:"Elektrizitätslehre",name:"Elektrische Ladung",formula:"Q = I · t",desc:"Bei konstantem Strom; allgemein ist Q das Zeitintegral der Stromstärke.",vars:[["Q","elektrische Ladung","C"],["I","Stromstärke","A"],["t","Zeit","s"]],extra:"1 C = 1 A·s"},
+{topic:"Elektrizitätslehre",name:"Stromstärke",formula:"I = ΔQ / Δt",desc:"Mittlere Ladungsmenge, die pro Zeit durch einen Querschnitt fließt.",vars:[["I","Stromstärke","A"],["ΔQ","Ladungsänderung / transportierte Ladung","C"],["Δt","Zeitintervall","s"]],extra:""},
+{topic:"Elektrizitätslehre",name:"Spannung",formula:"U = W / Q",desc:"Energie bzw. Arbeit pro Ladung bei der Übertragung zwischen zwei Punkten.",vars:[["U","elektrische Spannung","V"],["W","übertragene Energie / Arbeit","J"],["Q","Ladung","C"]],extra:"1 V = 1 J/C"},
+{topic:"Elektrizitätslehre",name:"Ohmsches Gesetz",formula:"U = R · I",desc:"Für ohmsche Bauteile bei konstanten physikalischen Bedingungen, wenn R unabhängig von U und I ist.",vars:[["U","Spannung","V"],["R","Widerstand","Ω"],["I","Stromstärke","A"]],extra:"I = U/R · R = U/I"},
+{topic:"Elektrizitätslehre",name:"Elektrischer Widerstand",formula:"R = ρ · l / A",desc:"Widerstand eines homogenen Leiters mit konstantem spezifischem Widerstand und gleichmäßigem Querschnitt.",vars:[["R","Widerstand","Ω"],["ρ","spezifischer Widerstand","Ω·m"],["l","Leiterlänge","m"],["A","Querschnittsfläche","m²"]],extra:""},
+{topic:"Elektrizitätslehre",name:"Elektrische Leistung",formula:"P = U · I",desc:"Leistung bei elektrischer Energieübertragung; bei Gleichstrom bzw. geeigneten Effektivwerten.",vars:[["P","elektrische Leistung","W"],["U","Spannung","V"],["I","Stromstärke","A"]],extra:"Für ohmschen Widerstand: P = I²R = U²/R"},
+{topic:"Elektrizitätslehre",name:"Elektrische Energie",formula:"E = P · t",desc:"Bei konstanter Leistung; bei variabler Leistung gilt E = ∫P(t)dt.",vars:[["E","elektrische Energie","J"],["P","Leistung","W"],["t","Zeit","s"]],extra:"E = U·I·t bei konstantem U und I"},
+{topic:"Elektrizitätslehre",name:"Kapazität",formula:"C = Q / U",desc:"Definition der Kapazität eines Kondensators; bei linearem Kondensator gilt Q proportional U.",vars:[["C","Kapazität","F"],["Q","Ladung","C"],["U","Spannung","V"]],extra:"1 F = 1 C/V"},
+{topic:"Elektrizitätslehre",name:"Plattenkondensator",formula:"C = ε₀ · εᵣ · A / d",desc:"Idealer Plattenkondensator; Randfelder vernachlässigt, homogenes Dielektrikum.",vars:[["C","Kapazität","F"],["ε₀","elektrische Feldkonstante","F/m"],["εᵣ","relative Permittivität","1"],["A","Plattenfläche","m²"],["d","Plattenabstand","m"]],extra:""},
+{topic:"Elektrizitätslehre",name:"Energie im Kondensator",formula:"E = ½ C U²",desc:"Gespeicherte Energie eines idealen Kondensators.",vars:[["E","Energie","J"],["C","Kapazität","F"],["U","Spannung","V"]],extra:"E = Q²/(2C) = ½QU"},
+{topic:"Elektrizitätslehre",name:"Kondensatoren parallel",formula:"C₍ges₎ = C₁ + C₂ + …",desc:"Parallelschaltung: gleiche Spannung an allen Kondensatoren.",vars:[["C₍ges₎","Gesamtkapazität","F"],["Cᵢ","Einzelkapazität","F"]],extra:""},
+{topic:"Elektrizitätslehre",name:"Kondensatoren in Reihe",formula:"1/C₍ges₎ = Σ 1/Cᵢ",desc:"Reihenschaltung idealer Kondensatoren; gleiche Ladungsbeträge.",vars:[["C₍ges₎","Gesamtkapazität","F"],["Cᵢ","Einzelkapazität","F"]],extra:"Für zwei: Cges = C₁C₂/(C₁+C₂)"},
+{topic:"Elektrizitätslehre",name:"Elektrisches Feld: Kraft",formula:"F = q · E",desc:"Kraft auf eine Ladung im elektrischen Feld; Vorzeichen von q bestimmt die Richtung.",vars:[["F","elektrische Kraft","N"],["q","Ladung","C"],["E","Feldstärke","N/C bzw. V/m"]],extra:""},
+{topic:"Elektrizitätslehre",name:"Homogenes elektrisches Feld",formula:"E = U / d",desc:"Betrag der Feldstärke zwischen parallelen Platten, wenn das Feld homogen ist.",vars:[["E","Feldstärke","V/m"],["U","Spannung","V"],["d","Plattenabstand","m"]],extra:""},
+{topic:"Magnetismus",name:"Lorentzkraft (bewegte Ladung)",formula:"F = |q| · v · B · sin(α)",desc:"Betrag der magnetischen Kraft auf eine bewegte Ladung; α ist der Winkel zwischen v und B.",vars:[["F","magnetische Kraft","N"],["q","Ladung","C"],["v","Geschwindigkeit","m/s"],["B","magnetische Flussdichte","T"],["α","Winkel zwischen v und B","°"]],extra:"Bei v ⟂ B: F = |q|vB"},
+{topic:"Magnetismus",name:"Kraft auf stromdurchflossenen Leiter",formula:"F = B · I · l · sin(α)",desc:"Gerader Leiter im homogenen Magnetfeld; α zwischen Leiter/Stromrichtung und B.",vars:[["F","magnetische Kraft","N"],["B","Flussdichte","T"],["I","Stromstärke","A"],["l","Leiterlänge im Feld","m"],["α","Winkel","°"]],extra:"Bei senkrechter Anordnung: F = B·I·l"},
+{topic:"Magnetismus",name:"Magnetischer Fluss",formula:"Φ = B · A · cos(α)",desc:"Fluss durch eine ebene Fläche bei homogenem B; α zwischen B und Flächennormale.",vars:[["Φ","magnetischer Fluss","Wb"],["B","magnetische Flussdichte","T"],["A","Fläche","m²"],["α","Winkel zur Flächennormale","°"]],extra:""},
+{topic:"Magnetismus",name:"Induktionsgesetz (Faraday)",formula:"Uᵢ = − dΦ/dt",desc:"Induzierte Spannung in einer Schleife; das Minuszeichen steht für die Lenzsche Regel. Für N Windungen: Uᵢ = −N·dΦ/dt.",vars:[["Uᵢ","Induktionsspannung","V"],["Φ","magnetischer Fluss","Wb"],["t","Zeit","s"],["N","Windungszahl","1"]],extra:"Bei mittlerer Änderung: Uᵢ ≈ −N·ΔΦ/Δt"},
+{topic:"Schwingungen & Wellen",name:"Periodendauer und Frequenz",formula:"f = 1 / T",desc:"Zusammenhang für periodische Vorgänge.",vars:[["f","Frequenz","Hz"],["T","Periodendauer","s"]],extra:""},
+{topic:"Schwingungen & Wellen",name:"Wellengeschwindigkeit",formula:"v = λ · f",desc:"Für eine Welle mit Wellenlänge λ und Frequenz f.",vars:[["v","Ausbreitungsgeschwindigkeit","m/s"],["λ","Wellenlänge","m"],["f","Frequenz","Hz"]],extra:""},
+{topic:"Schwingungen & Wellen",name:"Federpendel",formula:"T = 2π · √(m / D)",desc:"Ideale Feder, kleine bzw. beliebige Schwingung im linearen Hooke-Bereich, ohne Dämpfung.",vars:[["T","Periodendauer","s"],["m","schwingende Masse","kg"],["D","Federkonstante","N/m"]],extra:""},
+{topic:"Schwingungen & Wellen",name:"Fadenpendel",formula:"T = 2π · √(l / g)",desc:"Kleine Auslenkungen (Kleinwinkelnäherung), idealer Faden und keine Dämpfung.",vars:[["T","Periodendauer","s"],["l","Pendellänge","m"],["g","Fallbeschleunigung","m/s²"]],extra:""},
+{topic:"Schwingungen & Wellen",name:"Harmonische Schwingung",formula:"x(t) = A · cos(ωt + φ)",desc:"Ideale harmonische Schwingung; Wahl von Cosinus und Phase ist eine Konvention.",vars:[["x","Auslenkung","m"],["A","Amplitude","m"],["ω","Kreisfrequenz","rad/s"],["t","Zeit","s"],["φ","Phase","rad"]],extra:"ω = 2πf"},
+{topic:"Optik",name:"Reflexionsgesetz",formula:"α = β",desc:"Winkel werden jeweils zum Lot gemessen.",vars:[["α","Einfallswinkel","°"],["β","Reflexionswinkel","°"]],extra:""},
+{topic:"Optik",name:"Brechung (Snellius)",formula:"n₁ · sin(α₁) = n₂ · sin(α₂)",desc:"Für Licht an einer Grenzfläche zweier isotroper Medien; Winkel zum Lot.",vars:[["n₁, n₂","Brechungsindizes","1"],["α₁","Einfallswinkel","°"],["α₂","Brechungswinkel","°"]],extra:""},
+{topic:"Optik",name:"Brechungsindex",formula:"n = c / v",desc:"Für ein Medium; v ist die Phasengeschwindigkeit des Lichts im Medium.",vars:[["n","Brechungsindex","1"],["c","Lichtgeschwindigkeit im Vakuum","m/s"],["v","Lichtgeschwindigkeit im Medium","m/s"]],extra:""},
+{topic:"Optik",name:"Linsengleichung",formula:"1/f = 1/g + 1/b",desc:"Dünne Linse in paraxialer Näherung; Vorzeichen gemäß verwendeter Konvention beachten.",vars:[["f","Brennweite","m"],["g","Gegenstandsweite","m"],["b","Bildweite","m"]],extra:""},
+{topic:"Optik",name:"Abbildungsmaßstab",formula:"V = B / G = b / g",desc:"Beträge bei entsprechender geometrischer Abbildung; Vorzeichen können die Orientierung beschreiben.",vars:[["V","Abbildungsmaßstab","1"],["B","Bildgröße","m"],["G","Gegenstandsgröße","m"],["b","Bildweite","m"],["g","Gegenstandsweite","m"]],extra:""},
+{topic:"Thermodynamik",name:"Temperaturumrechnung",formula:"T = θ + 273,15",desc:"Umrechnung Celsius in Kelvin; Temperaturdifferenzen sind zahlenmäßig gleich in K und °C.",vars:[["T","absolute Temperatur","K"],["θ","Celsius-Temperatur","°C"]],extra:""},
+{topic:"Thermodynamik",name:"Wärme bei Temperaturänderung",formula:"Q = m · c · ΔT",desc:"Ohne Phasenübergang und bei näherungsweise konstanter spezifischer Wärmekapazität.",vars:[["Q","zugeführte Wärmeenergie","J"],["m","Masse","kg"],["c","spezifische Wärmekapazität","J/(kg·K)"],["ΔT","Temperaturänderung","K"]],extra:""},
+{topic:"Thermodynamik",name:"Ideales Gasgesetz",formula:"p · V = n · R · T",desc:"Modell des idealen Gases; T in Kelvin, Stoffmenge n.",vars:[["p","Druck","Pa"],["V","Volumen","m³"],["n","Stoffmenge","mol"],["R","universelle Gaskonstante","J/(mol·K)"],["T","absolute Temperatur","K"]],extra:"R ≈ 8,314 J/(mol·K)"},
+{topic:"Thermodynamik",name:"Wirkungsgrad",formula:"η = Eₙᵤₜz / Eₐᵤf = Pₙᵤₜz / Pₐᵤf",desc:"Verhältnis nutzbarer Energie bzw. Leistung zur zugeführten Energie bzw. Leistung im gleichen Zeitraum.",vars:[["η","Wirkungsgrad","1 bzw. %"],["E","Energie","J"],["P","Leistung","W"]],extra:"η ist bei realen passiven Systemen höchstens 1 (100 %)"},
+{topic:"Atom- & Quantenphysik",name:"Photonenenergie",formula:"E = h · f",desc:"Energie eines Photons.",vars:[["E","Photonenenergie","J"],["h","Planck-Konstante","J·s"],["f","Frequenz","Hz"]],extra:"h ≈ 6,626·10⁻³⁴ J·s"},
+{topic:"Atom- & Quantenphysik",name:"Photonenenergie und Wellenlänge",formula:"E = h · c / λ",desc:"Aus E = hf und f = c/λ für ein Photon im Vakuum.",vars:[["E","Photonenenergie","J"],["h","Planck-Konstante","J·s"],["c","Lichtgeschwindigkeit","m/s"],["λ","Wellenlänge im Vakuum","m"]],extra:""},
+{topic:"Atom- & Quantenphysik",name:"De-Broglie-Wellenlänge",formula:"λ = h / p",desc:"Materiewelle eines Teilchens; nichtrelativistisch p = mv.",vars:[["λ","Wellenlänge","m"],["h","Planck-Konstante","J·s"],["p","Impuls","kg·m/s"]],extra:"Nichtrelativistisch: λ = h/(mv)"},
+{topic:"Atom- & Quantenphysik",name:"Äquivalenz von Masse und Energie",formula:"E = m · c²",desc:"Ruheenergie eines Körpers.",vars:[["E","Ruheenergie","J"],["m","Masse","kg"],["c","Lichtgeschwindigkeit im Vakuum","m/s"]],extra:""},
+{topic:"Atom- & Quantenphysik",name:"Radioaktiver Zerfall",formula:"N(t) = N₀ · e^(−λt)",desc:"Statistisches Zerfallsgesetz für eine einzelne Nuklidart mit konstanter Zerfallskonstante.",vars:[["N(t)","noch nicht zerfallene Kerne","1"],["N₀","Anfangszahl","1"],["λ","Zerfallskonstante","1/s"],["t","Zeit","s"]],extra:"A(t) = λN(t) · T₁/₂ = ln(2)/λ"},
+{topic:"Mathematische Grundlagen",name:"Winkelgeschwindigkeit",formula:"ω = Δφ / Δt",desc:"Mittlere Winkelgeschwindigkeit; bei konstanter Rotation gilt ω = φ/t.",vars:[["ω","Winkelgeschwindigkeit","rad/s"],["Δφ","Winkeländerung","rad"],["Δt","Zeitintervall","s"]],extra:"Bei gleichförmiger Kreisbewegung: ω = 2π/T = 2πf"},
+{topic:"Mathematische Grundlagen",name:"Prozentuale Änderung",formula:"Δx / x₀ · 100 %",desc:"Relative Änderung bezogen auf den Anfangswert x₀.",vars:[["Δx","Änderung","Einheit von x"],["x₀","Anfangswert","Einheit von x"]],extra:""}
+];
+const topics = ["Alle","Favoriten",...new Set(base.map(x=>x.topic))];
+let custom = JSON.parse(localStorage.getItem("physik_custom")||"[]");
+let favorites = JSON.parse(localStorage.getItem("physik_favs")||"[]");
+let current = "Alle", query = "";
+const all = () => [...base,...custom];
+const $ = s=>document.querySelector(s);
+function save(){localStorage.setItem("physik_custom",JSON.stringify(custom));localStorage.setItem("physik_favs",JSON.stringify(favorites))}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
+function drawSidebar(){
+ const topicList=["Alle","Favoriten",...new Set(all().map(f=>f.topic))];
+ $("#sidebar").innerHTML='<div class="side-label">Bereiche</div>'+topicList.map(t=>`<button class="navitem ${t===current?'active':''}" data-topic="${esc(t)}">${esc(t)}<span class="count">${t==="Favoriten"?favorites.length:t==="Alle"?all().length:all().filter(f=>f.topic===t).length}</span></button>`).join("");
+ $("#sidebar").querySelectorAll("[data-topic]").forEach(b=>b.onclick=()=>{current=b.dataset.topic;draw()});
+}
+function draw(){
+ drawSidebar();
+ const filtered=all().filter(f=>(current==="Alle"||current==="Favoriten"&&favorites.includes(f.id)||f.topic===current)&&(!query||[f.name,f.topic,f.formula,f.desc,f.extra,...(f.vars||[]).flat()].join(" ").toLowerCase().includes(query)));
+ const sorted=filtered.sort((a,b)=>$("#sort").value==="name"?a.name.localeCompare(b.name):a.topic.localeCompare(b.topic)||a.name.localeCompare(b.name));
+ $("#sectionTitle").textContent=current;
+ $("#sectionDesc").textContent=query?`${filtered.length} Treffer für „${query}“`:current==="Favoriten"?"Deine gespeicherten Formeln":"Formeln und Definitionen";
+ $("#formulaCount").textContent=all().length;$("#topicCount").textContent=new Set(all().map(f=>f.topic)).size;$("#favCount").textContent=favorites.length;
+ $("#cards").innerHTML=sorted.length?sorted.map(f=>`<article class="card">
+ <div class="cardtop"><div><div class="tag">${esc(f.topic)}</div><h3>${esc(f.name)}</h3></div><button class="favorite ${favorites.includes(f.id)?'on':''}" data-fav="${esc(f.id)}" title="Favorit">${favorites.includes(f.id)?"★":"☆"}</button></div>
+ <div class="formula">${esc(f.formula)}</div><p class="desc">${esc(f.desc||"")}</p>
+ <div class="vars">${(f.vars||[]).map(v=>`<div class="var"><span class="symbol">${esc(v[0])}</span><span>${esc(v[1])}</span><span class="unit">${esc(v[2])}</span></div>`).join("")}</div>
+ ${f.extra?`<div class="extra">${esc(f.extra)}</div>`:""}
+ <div class="cardfoot"><span class="pill">${f.custom?"Eigener Eintrag":"Grundformel"}</span>${f.custom?`<button class="btn small" data-del="${esc(f.id)}">Löschen</button>`:""}</div>
+ </article>`).join(""):`<div class="empty">Keine Formeln gefunden. Ändere die Suche oder füge eine eigene Formel hinzu.</div>`;
+ $("#cards").querySelectorAll("[data-fav]").forEach(b=>b.onclick=()=>{const id=b.dataset.fav;favorites.includes(id)?favorites=favorites.filter(x=>x!==id):favorites.push(id);save();draw()});
+ $("#cards").querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{custom=custom.filter(f=>f.id!==b.dataset.del);favorites=favorites.filter(id=>id!==b.dataset.del);save();draw();toast("Eigene Formel gelöscht")});
+}
+$("#search").oninput=e=>{query=e.target.value.trim().toLowerCase();draw()};
+$("#clearSearch").onclick=()=>{$("#search").value="";query="";draw()};
+$("#sort").onchange=draw;
+const modal=()=>$("#modalBack").classList.add("show");
+const close=()=>$("#modalBack").classList.remove("show");
+$("#addBtn").onclick=()=>{$("#formulaForm").reset();modal()};
+$("#cancelBtn").onclick=close;
+$("#modalBack").onclick=e=>{if(e.target===$("#modalBack"))close()};
+$("#formulaForm").onsubmit=e=>{e.preventDefault();const fd=new FormData(e.target);const vars=String(fd.get("vars")).split("\n").map(line=>line.split("|").map(x=>x.trim())).filter(v=>v.length>=3&&v[0]);custom.push({id:"c_"+Date.now(),topic:fd.get("topic").trim(),name:fd.get("name").trim(),formula:fd.get("formula").trim(),desc:fd.get("desc").trim(),vars,extra:fd.get("extra").trim(),custom:true});save();close();current=custom.at(-1).topic;draw();toast("Formel gespeichert")};
+$("#exportBtn").onclick=()=>{const data={version:1,custom,favorites};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="physik-formelsammlung-backup.json";a.click();URL.revokeObjectURL(a.href);toast("Backup exportiert")};
+$("#importBtn").onclick=()=>$("#fileInput").click();
+$("#fileInput").onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());if(!Array.isArray(data.custom)||!Array.isArray(data.favorites))throw new Error();custom=data.custom;favorites=data.favorites;save();draw();toast("Backup importiert")}catch{toast("Datei konnte nicht gelesen werden")}e.target.value=""};
+draw();
+</script>
+</body>
+</html>
